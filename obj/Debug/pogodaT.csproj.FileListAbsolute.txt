@@ -1,0 +1,9 @@
+C:\Users\Raven\source\repos\pogodaT\bin\Debug\pogodaT.exe.config
+C:\Users\Raven\source\repos\pogodaT\bin\Debug\pogodaT.exe
+C:\Users\Raven\source\repos\pogodaT\bin\Debug\pogodaT.pdb
+C:\Users\Raven\source\repos\pogodaT\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Raven\source\repos\pogodaT\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Raven\source\repos\pogodaT\obj\Debug\pogodaT.csproj.AssemblyReference.cache
+C:\Users\Raven\source\repos\pogodaT\obj\Debug\pogodaT.csproj.CoreCompileInputs.cache
+C:\Users\Raven\source\repos\pogodaT\obj\Debug\pogodaT.exe
+C:\Users\Raven\source\repos\pogodaT\obj\Debug\pogodaT.pdb
