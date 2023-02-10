@@ -14,34 +14,36 @@ namespace pogodaT
             HttpClient client = new HttpClient();
             int offset = 0;
             string ResponseToUSer = "";
+            string key = "c3c398126843eb80375dd3c0dc29408f";
+            string token = "6065106008:AAHRvScT6r6cp6Wr4Mb4Cal0aBpj5fxtlUA";
             while (true)
             {
-                var responseT = await client.GetAsync("https://api.telegram.org/bot" + "6065106008:AAHRvScT6r6cp6Wr4Mb4Cal0aBpj5fxtlUA" + "/getUpdates?offset="+offset+ "&limit=1");
+                var responseT = await client.GetAsync("https://api.telegram.org/bot" + token + "/getUpdates?offset=" + offset + "&limit=1");
                 var jsonT = await responseT.Content.ReadAsStringAsync();
                 Dictionary<string, string> openWithT = JsonParser(jsonT);
                 if (responseT.IsSuccessStatusCode && openWithT.Count > 2)
                 {
-                    offset = int.Parse(openWithT["result.update_id"])+1;
+                    offset = int.Parse(openWithT["result.update_id"]) + 1;
                     if (openWithT["result.message.text"] == "/start")
                     {
                         ResponseToUSer = "Введите название города";
-                        await client.GetAsync("https://api.telegram.org/bot" + "6065106008:AAHRvScT6r6cp6Wr4Mb4Cal0aBpj5fxtlUA" + "/sendMessage?chat_id=" + openWithT["result.message.chat.id"] + "&text=" + ResponseToUSer);
+                        await client.GetAsync("https://api.telegram.org/bot" + token + "/sendMessage?chat_id=" + openWithT["result.message.chat.id"] + "&text=" + ResponseToUSer);
                     }
                     else
                     {
-                        HttpResponseMessage response = await client.GetAsync("https://api.openweathermap.org/data/2.5/weather?q=" + openWithT["result.message.text"] + "&appid=" + "c3c398126843eb80375dd3c0dc29408f" + "&lang=ru&units=metric");
+                        HttpResponseMessage response = await client.GetAsync("https://api.openweathermap.org/data/2.5/weather?q=" + openWithT["result.message.text"] + "&appid=" + key + "&lang=ru&units=metric");
                         if (response.IsSuccessStatusCode)
                         {
                             Dictionary<string, string> dict = JsonParser(await response.Content.ReadAsStringAsync());
                             ResponseToUSer = "Прогноз погоды на " + DateTime.Now + " для города " + dict["name"] + ":\n";
                             ResponseToUSer += "Текущая температура " + dict["main.temp"] + "°, " + dict["weather.description"] + ", ощущается как " + dict["main.feels_like"] + "°\n";
                             ResponseToUSer += "Скорость ветра " + dict["wind.speed"] + " м/с, " + WindDeg(int.Parse(dict["wind.deg"])) + ", влажность " + dict["main.humidity"] + "%, давление " + dict["main.pressure"] + " мм рт. ст.";
-                            await client.GetAsync("https://api.telegram.org/bot"+ "6065106008:AAHRvScT6r6cp6Wr4Mb4Cal0aBpj5fxtlUA" + "/sendMessage?chat_id="+ openWithT["result.message.chat.id"] + "&text=" + ResponseToUSer);
+                            await client.GetAsync("https://api.telegram.org/bot" + token + "/sendMessage?chat_id=" + openWithT["result.message.chat.id"] + "&text=" + ResponseToUSer);
                         }
                         else
                         {
                             ResponseToUSer = "Неправильный город, или вы не поняли суть бота";
-                            await client.GetAsync("https://api.telegram.org/bot" + "6065106008:AAHRvScT6r6cp6Wr4Mb4Cal0aBpj5fxtlUA" + "/sendMessage?chat_id=" + openWithT["result.message.chat.id"] + "&text=" + ResponseToUSer);
+                            await client.GetAsync("https://api.telegram.org/bot" + token + "/sendMessage?chat_id=" + openWithT["result.message.chat.id"] + "&text=" + ResponseToUSer);
                         }
                     }
                 }
